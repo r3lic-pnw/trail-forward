@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A website for hiking group composed of and designed to support people with lived experience of incarceration, drug addiction, and homelessness.",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
@@ -24,6 +25,8 @@
   },
   "homepage": "https://github.com/r3lic-pnw/trail-forward#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
   }
 }

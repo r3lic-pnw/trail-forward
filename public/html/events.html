@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Trail Forward is a supportive hiking community for individuals who have experienced incarceration or addiction, offering a safe and healing space to reconnect with nature, rebuild self-worth, and foster meaningful connections." />
+    <meta name="keywords" content="hiking, community, support, reentry, recovery, nature, wellness, sobriety" />
+    <meta name="author" content="Jarrell Quincy | r3lic" />
+    <title>Events</title>
+</head>
+
+<body>
+    <h1>Events</h1>
+    <p>Welcome to the Trail Forward events page! Here you can find information about upcoming events, community
+        gatherings, and opportunities to connect with others who share a passion for hiking and nature.</p>
+    <p>Whether you're looking to join a hike or simply learn more about our community, this page is your go-to resource
+        for all things related to Trail Forward events.</p>
+    <p>Stay tuned for updates on our next event, and feel free to reach out if you have any questions or suggestions. We
+        look forward to seeing you on the trails!</p>
+
+    <form action="/api/events" method="post">
+        <input type="text" name="eventName" placeholder="Event Name" required />
+        <input type="date" name="eventDate" required />
+        <input type="text" name="eventLocation" placeholder="Event Location" required />
+        <button type="submit">Create Event</button>
+    </form>
+    <div id="event-list"></div>
+    <script src="/js/events.js"></script>
+</body>
+
+</html>

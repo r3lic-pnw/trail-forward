@@ -4,7 +4,8 @@
   "description": "A website for hiking group composed of and designed to support people with lived experience of incarceration, drug addiction, and homelessness.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",

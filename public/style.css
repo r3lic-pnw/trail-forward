@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 100%;
+}
+
+#mission-statement {
+    height: 100vh;
+    background-image: url("./assets/three-amigos.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-top: 48px;
+}
+
+.section-content {
+    position: sticky;
+    top: 48px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.section-content h2 {
+    padding-bottom: 8px;
+}
+
+#vision {
+    height: 100vh;
+    background-image: url("./assets/man-in-trees.jpg");
+    background-size: cover;
+    padding-top: 8px;
+    background-position: center;
+
+}
+
+#core-values {
+    height: 100vh;
+    background-image: url("./assets/big-al.jpg");
+    background-size: cover;
+    padding-top: 8px;
+    background-position: center top;
+
+}

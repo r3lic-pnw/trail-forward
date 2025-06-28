@@ -7,7 +7,7 @@ const DB_CONFIG = {
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
-    password: process.env.DB_PWD,
+    password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
     ssl: { rejectUnauthorized: false }, // Disable SSL for local development; set to true for production if needed 
     // connectionPool: process.env.NODE_ENV === "development" ? process.env.DB_URL_EXTERNAL : process.env.DB_URL_INTERNAL,

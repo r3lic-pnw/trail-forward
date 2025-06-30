@@ -14,19 +14,13 @@
 
 <body>
     <h1>Events</h1>
-    <p>
-        Welcome to the Trail Forward events page! Here you can find information about upcoming events, community
-        gatherings, and opportunities to connect with others who share a passion for hiking and nature.
-    </p>
-    <p>
-        Whether you're looking to join a hike or simply learn more about our community, this page is your go-to resource
-        for all things related to Trail Forward events.
-    </p>
-    <p>
-        Stay tuned for updates on our next event, and feel free to reach out if you have any questions or suggestions.
-        We look forward to seeing you on the trails!
-    </p>
 
+    <form id="event-form">
+        <input type="text" name="eventName" placeholder="Event Name" required />
+        <input type="datetime-local" name="eventDate" required />
+        <input type="text" name="eventLocation" placeholder="Event Location" required />
+        <button type="submit">Create Event</button>
+    </form>
     <div id="event-list">
         <div id="upcoming-events">
             <h2>Upcoming Events</h2>
@@ -37,7 +31,7 @@
             <ul id="past-events-list"></ul>
         </div>
     </div>
-    <script src="/js/events.js"></script>
+    <script src="/js/editEvents.js"></script>
 </body>
 
 </html>

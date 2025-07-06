@@ -2,11 +2,11 @@
   "name": "trail-forward",
   "version": "1.0.0",
   "description": "A website for hiking group composed of and designed to support people with lived experience of incarceration, drug addiction, and homelessness.",
-  "main": "main.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,6 @@
   "dependencies": {
     "dotenv": "^17.0.0",
     "express": "^5.1.0",
-    "pg": "^8.16.3"
+    "mysql2": "^3.14.1"
   }
 }

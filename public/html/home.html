@@ -8,16 +8,29 @@
     content="Trail Forward is a supportive hiking community for individuals who have experienced incarceration or addiction, offering a safe and healing space to reconnect with nature, rebuild self-worth, and foster meaningful connections." />
   <meta name="keywords" content="hiking, community, support, reentry, recovery, nature, wellness, sobriety" />
   <meta name="author" content="Jarrell Quincy | r3lic" />
-  <title>Trail Forward</title>
-  <link href='./style.css' rel='stylesheet'>
+  <title>Trail Forward | Home</title>
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel='stylesheet' href='../styles/home.css'>
 </head>
 
 <body>
+  <header>
+    <h1>Trail Forward</h1>
+    <button id="menu-icon" aria-label="Open Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="main-nav" aria-label="Menu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/contacts">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
   <main>
-    <header>
-      <h1>Trail Forward</h1>
-    </header>
-
     <section id="mission-statement">
       <div class="section-content">
         <h2>Mission Statement</h2>
@@ -80,7 +93,8 @@
       </div>
     </section>
   </main>
-  <!-- <script defer type="text/javascript" src="/main.js"></script> -->
+
+  <script src="../js/global.js"></script>
 </body>
 
 </html>

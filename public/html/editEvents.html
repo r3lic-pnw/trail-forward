@@ -9,29 +9,58 @@
     <meta name="keywords"
         content="trail forward, hiking, community, support, reentry, recovery, nature, wellness, sobriety" />
     <meta name="author" content="Jarrell Quincy | r3lic" />
-    <title>Events</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/events.css">
+    <link rel="stylesheet" href="../styles/editEvents.css">
+    <title>Trail Forward | Edit Events</title>
 </head>
 
 <body>
-    <h1>Events</h1>
+    <header>
+        <h1>Events</h1>
+        <button id="menu-icon" aria-label="Open Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="main-nav" aria-label="Menu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/contacts">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
 
-    <form id="event-form">
-        <input type="text" name="eventName" placeholder="Event Name" required />
-        <input type="datetime-local" name="eventDate" required />
-        <input type="text" name="eventLocation" placeholder="Event Location" required />
-        <button type="submit">Create Event</button>
-    </form>
-    <div id="event-list">
-        <div id="upcoming-events">
-            <h2>Upcoming Events</h2>
-            <ul id="upcoming-events-list"></ul>
-        </div>
-        <div id="past-events">
-            <h2>Past Events</h2>
-            <ul id="past-events-list"></ul>
-        </div>
-    </div>
-    <script src="/js/editEvents.js"></script>
+        <form id="event-form">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" placeholder="Event Name" required />
+
+            <label for="eventDate">Event Date:</label>
+            <input type="datetime-local" id="eventDate" name="eventDate" required />
+
+            <label for="eventLocation">Event Location:</label>
+            <input type="text" id="eventLocation" name="eventLocation" placeholder="Event Location" required />
+            <button type="submit" id="create-event-button">Create Event</button>
+        </form>
+
+        <div id="map"></div>
+
+        <section id="event-list">
+            <div id="upcoming-events" class="event-section">
+                <h2>Upcoming Events</h2>
+                <ul id="upcoming-events-list"></ul>
+            </div>
+            <div id="past-events" class="event-section">
+                <h2>Past Events</h2>
+                <ul id="past-events-list"></ul>
+            </div>
+        </section>
+    </main>
+    <script src="../js/global.js"></script>
+    <script src="../js/editEvents.js" type="module"></script>
 </body>
 
 </html>

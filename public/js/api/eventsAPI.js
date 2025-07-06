@@ -34,12 +34,13 @@ export function displayEvents(events) {
                 // Create a link for the event name
                 const eventLocationLink = makeLocationLink(event.location, event.name);
                 eventItem.appendChild(eventLocationLink);
-                eventItem.innerHTML += ` - ${new Date(event.date).toLocaleString()} at `;
+                eventItem.innerHTML += ` - ${new Date(event.date).toLocaleString()}`;
 
                 // Only show the delete button if the user is on the Edit Events page
 
                 if (window.location.pathname.includes("edit-events")) {
                     const deleteButton = document.createElement('button');
+                    deleteButton.classList.add('delete-button');
                     deleteButton.textContent = 'Delete';
                     deleteButton.addEventListener('click', () => deleteEvent(event.id));
 

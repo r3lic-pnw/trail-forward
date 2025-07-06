@@ -1,8 +1,13 @@
 // This file contains functions to fetch, display, create, and delete events.
 // It is used in both the Events page and the Edit Events page.
+import { Event } from "../../../types/event";
 
-// This fetches events from the server and displays them on the Events page.
-export async function fetchEvents() {
+/** 
+ * This fetches events from the server and displays them on the Events page.
+ *
+ * @returns {Promise<Array>} A promise that resolves to an array of events.
+ */
+export async function fetchEvents(): Promise<Array<Event> | null> {
     try {
         const response = await fetch('/api/events');
         const data = await response.json();
@@ -14,9 +19,14 @@ export async function fetchEvents() {
 }
 
 // This function will display the events in the Upcoming and Past Events sections.
-export function displayEvents(events) {
-    const upcomingEventsList = document.getElementById('upcoming-events-list');
-    const pastEventsList = document.getElementById('past-events-list');
+export function displayEvents(events: Event[] | null): void {
+    const upcomingEventsList: HTMLUListElement | null = document.getElementById('upcoming-events-list') as HTMLUListElement | null;
+    const pastEventsList: HTMLUListElement | null = document.getElementById('past-events-list') as HTMLUListElement | null;
+
+    if (!upcomingEventsList || !pastEventsList) {
+        console.error('Upcoming or Past Events list elements not found.');
+        return;
+    }
 
     // Clear previous event lists
     upcomingEventsList.innerHTML = '';
@@ -24,11 +34,11 @@ export function displayEvents(events) {
 
     if (events && events.length > 0) {
         events
-            .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort events oldest to newest
+            .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime()) // Sort events oldest to newest
             .forEach(event => {
                 // Create a list item for each event
                 const eventItem = document.createElement('li');
-                eventItem.id = event.id; // Set the ID for easy deletion
+                eventItem.id = event.id.toString(); // Set the ID for easy deletion
                 eventItem.classList.add('event-item');
 
                 // Create a link for the event name
@@ -67,10 +77,12 @@ export function displayEvents(events) {
 }
 
 // This function will handle the form submission to add a new event.
-export async function createEvent(event) {
+export async function createEvent(event: SubmitEvent): Promise<void> {
     event.preventDefault(); // Prevent the default form submission
 
-    const formData = new FormData(event.target);
+    const form = event.target! as HTMLFormElement;
+
+    const formData = new FormData(form);
     const eventData = Object.fromEntries(formData);
     console.log('Event data to be submitted:', eventData);
 
@@ -84,7 +96,7 @@ export async function createEvent(event) {
         if (response.status === 201) {
             const events = await fetchEvents(); // refetch events after adding a new one
             displayEvents(events); // display the updated list of events
-            event.target.reset(); // Reset the form after successful submission
+            form.reset(); // Reset the form after successful submission
         } else {
             console.error('Error adding event:', response.statusText);
         }

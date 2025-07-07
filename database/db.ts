@@ -1,6 +1,4 @@
 import { createPool, Pool } from "mysql2/promise";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Database connection configuration
 const DB_CONFIG: DBConfig = {

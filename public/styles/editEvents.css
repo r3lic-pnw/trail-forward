@@ -16,7 +16,8 @@ li {
 }
 
 #event-form input,
-#create-event-button {
+#create-event-button,
+#eventDescription {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;

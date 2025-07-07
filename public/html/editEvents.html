@@ -43,21 +43,24 @@
 
             <label for="eventLocation">Event Location:</label>
             <input type="text" id="eventLocation" name="eventLocation" placeholder="Event Location" required />
+
+            <label for="eventDescription">Event Description:</label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Event Description"></textarea>
+
             <button type="submit" id="create-event-button">Create Event</button>
-        </form>
 
-        <div id="map"></div>
+            <div id="map"></div>
 
-        <section id="event-list">
-            <div id="upcoming-events" class="event-section">
-                <h2>Upcoming Events</h2>
-                <ul id="upcoming-events-list"></ul>
-            </div>
-            <div id="past-events" class="event-section">
-                <h2>Past Events</h2>
-                <ul id="past-events-list"></ul>
-            </div>
-        </section>
+            <section id="event-list">
+                <div id="upcoming-events" class="event-section">
+                    <h2>Upcoming Events</h2>
+                    <ul id="upcoming-events-list"></ul>
+                </div>
+                <div id="past-events" class="event-section">
+                    <h2>Past Events</h2>
+                    <ul id="past-events-list"></ul>
+                </div>
+            </section>
     </main>
     <script src="../js/global.js"></script>
     <script src="../js/editEvents.js" type="module"></script>

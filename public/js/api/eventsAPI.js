@@ -37,7 +37,6 @@ export function displayEvents(events) {
                 eventItem.innerHTML += ` - ${new Date(event.date).toLocaleString()}`;
 
                 // Only show the delete button if the user is on the Edit Events page
-
                 if (window.location.pathname.includes("edit-events")) {
                     const deleteButton = document.createElement('button');
                     deleteButton.classList.add('delete-button');
@@ -45,6 +44,13 @@ export function displayEvents(events) {
                     deleteButton.addEventListener('click', () => deleteEvent(event.id));
 
                     eventItem.appendChild(deleteButton);
+                }
+
+                // Add a description if it exists
+                if (event.description) {
+                    const description = document.createElement('p');
+                    description.textContent = event.description;
+                    eventItem.appendChild(description);
                 }
 
                 // Append the event item to the appropriate list based on the date

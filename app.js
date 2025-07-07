@@ -42,12 +42,12 @@ app.get('/api/events', (req, res) => {
 // This endpoint will handle adding new events to the database.
 app.post('/api/events', (req, res) => {
     console.log('Adding new event\n');
-    const { eventName, eventDate, eventLocation } = req.body;
+    const { eventName, eventDate, eventLocation, eventDescription } = req.body;
 
     console.log('Received eventDate:', eventDate);
     console.log('Type of eventDate:', typeof eventDate);
 
-    pool.execute('INSERT INTO events (name, date, location) VALUES (?, ?, ?)', [eventName, eventDate, eventLocation])
+    pool.execute('INSERT INTO events (name, date, location, description) VALUES (?, ?, ?)', [eventName, eventDate, eventLocation, eventDescription])
         .then(() => pool.execute("SELECT column_name, data_type, datetime_precision FROM information_schema.columns WHERE table_name = 'events' AND column_name = 'date'"))
         .then(result => {
             console.log('Date column metadata:', result[0][0]);

@@ -1,4 +1,3 @@
-// File: public/js/events.js
 // This file will handle fetching and displaying events for the Events page.
 import { fetchEvents, displayEvents } from './api/eventsAPI.js';
 

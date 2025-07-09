@@ -1,1 +1,2 @@
 # trail-forward
+Our mission is to create a supportive hiking community for individuals who have experienced incarceration or addiction, offering a safe and healing space to reconnect with nature, rebuild self-worth, and foster meaningful connections. Through shared journeys on the trail, we aim to inspire growth, resilience, and hope for a healthier, purpose-driven future.

@@ -1,11 +1,11 @@
 // This file contains functions to fetch, display, create, and delete events.
 // It is used in both the Events page and the Edit Events page.
-import { Event } from "../../../types/event";
+import { Event } from "../types/event.types";
 
 /** 
- * This fetches events from the server and displays them on the Events page.
+ * This fetches events from the server and returns them.
  *
- * @returns {Promise<Array>} A promise that resolves to an array of events.
+ * @returns {Promise<Array<Event>>} A promise that resolves to an array of events.
  */
 export async function fetchEvents(): Promise<Array<Event> | null> {
     try {
@@ -18,7 +18,18 @@ export async function fetchEvents(): Promise<Array<Event> | null> {
     }
 }
 
-// This function will display the events in the Upcoming and Past Events sections.
+
+/**
+ * This function will display the events in the Upcoming and Past Events sections.
+ * 
+ * It sorts the events by date, displaying upcoming events in one list and past events in another.
+ * 
+ * If null, it will display a message indicating no events found.
+ * 
+ * @param {Array<Event> | null} events - The list of events to display.
+ * 
+ * @returns {void}
+ */
 export function displayEvents(events: Event[] | null): void {
     const upcomingEventsList: HTMLUListElement | null = document.getElementById('upcoming-events-list') as HTMLUListElement | null;
     const pastEventsList: HTMLUListElement | null = document.getElementById('past-events-list') as HTMLUListElement | null;
@@ -41,7 +52,7 @@ export function displayEvents(events: Event[] | null): void {
                 eventItem.id = event.id.toString(); // Set the ID for easy deletion
                 eventItem.classList.add('event-item');
 
-                // Create a link for the event name
+                // Creates a link to the event location
                 const eventLocationLink = makeLocationLink(event.location, event.name);
                 eventItem.appendChild(eventLocationLink);
                 eventItem.innerHTML += ` - ${new Date(event.date).toLocaleString()}`;
@@ -76,7 +87,16 @@ export function displayEvents(events: Event[] | null): void {
     }
 }
 
-// This function will handle the form submission to add a new event.
+/**
+ * This function will handle the form submission to add a new event.
+ * 
+ * It will prevent the default form submission, gather the form data,
+ * and send a POST request to the server to create the event.
+ * 
+ * @param {Event} event
+ * 
+ * @returns {Promise<void>} 
+ */
 export async function createEvent(event: SubmitEvent): Promise<void> {
     event.preventDefault(); // Prevent the default form submission
 
@@ -105,9 +125,16 @@ export async function createEvent(event: SubmitEvent): Promise<void> {
     });
 }
 
-
-// This function will handle deleting an event.
-export function deleteEvent(eventId) {
+/**
+ * This function will handle deleting an event.
+ * 
+ * It will remove the event from the DOM and send a DELETE request to the server.
+ * 
+ * @param eventId - The ID of the event to be deleted.
+ * 
+ * @returns {void}
+ */
+export function deleteEvent(eventId: number): void {
     console.log(`Delete event with ID: ${eventId}`);
 
     const deletedEventItem = document.querySelector(`li[id='${eventId}']`);
@@ -122,9 +149,19 @@ export function deleteEvent(eventId) {
     });
 }
 
-// This function creates a link to the event location.
-// It will open the location in the appropriate maps app based on the user's device.
-function makeLocationLink(location, name) {
+/**
+ * This function creates a link to the event location.
+ * 
+ * It will open the location in the appropriate maps app based on the user's device.
+ * 
+ * @param {string} location 
+ * @param {string} name 
+ * @returns {HTMLAnchorElement} The anchor element linking to the event location.
+ * @example
+ * makeLocationLink('1600 Amphitheatre Parkway, Mountain View, CA', 'Googleplex');
+ * // => <a href='https://www.google.com/maps/search/?api=1&query=1600%20Amphitheatre%20Parkway%2C%20Mountain%20View%2C%20CA'>Googleplex</a>
+ */
+function makeLocationLink(location: string, name: string): HTMLAnchorElement {
     const encodedLocation = encodeURIComponent(location);
     const link = document.createElement('a');
 

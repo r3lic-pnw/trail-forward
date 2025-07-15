@@ -2,6 +2,7 @@ import express from 'express';
 import type { ResultSetHeader } from 'mysql2';
 import path from 'path';
 import pool from './database/db.js';
+import { readdir } from 'fs';
 
 const staticFilesPath = path.join(process.cwd(), 'public');
 const staticHTMLPath = path.join(process.cwd(), 'public', 'html');
@@ -87,7 +88,27 @@ const server = app.listen(PORT, () => {
 });
 
 // This endpoint will handle fetching images from the database.
-app.get("/api/images", (req, res) => {
+app.get("/api/gallery", (req, res) => {
+    console.log('Fetching gallery images\n');
+    const imagesDir = path.join(staticFilesPath, 'assets');
+
+    readdir(imagesDir, (err, files) => {
+        if (err) {
+            console.error('Error reading images directory:', err);
+            return res.status(500).json({ error: 'Failed to fetch gallery images' });
+        }
+
+        // Filter for image files (you can adjust the extensions as needed)
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+        const imageURLs = imageFiles.map(file => `/assets/${file}`); // Create URLs for the images
+
+        if (imageURLs.length === 0) {
+            console.error('No images found in the gallery.');
+            return res.status(404).json({ error: 'No images found' });
+        }
+
+        res.json(imageURLs); // Send the image URLs as JSON response
+    });
 
 });
 

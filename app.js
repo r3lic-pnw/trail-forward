@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import pool from './database/db.js';
+import { readdir } from 'fs';
 const staticFilesPath = path.join(process.cwd(), 'public');
 const staticHTMLPath = path.join(process.cwd(), 'public', 'html');
 const app = express();
@@ -17,6 +18,10 @@ app.get('/events', (req, res) => {
 app.get("/edit-events", (req, res) => {
     res.sendFile("editEvents.html", { root: staticHTMLPath });
 });
+app.get('/gallery', (req, res) => {
+    res.sendFile("gallery.html", { root: staticHTMLPath });
+});
+// ********** API Endpoints **********
 // This endpoint will handle fetching events from the database.
 app.get('/api/events', (req, res) => {
     // Create the events table if it doesn't exist
@@ -70,7 +75,24 @@ const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}\n`);
 });
 // This endpoint will handle fetching images from the database.
-app.get("/api/images", (req, res) => {
+// Returnss a list of image URLs from the server's static assets directory.
+app.get("/api/gallery", (req, res) => {
+    console.log('Fetching gallery images\n');
+    const imagesDir = path.join(staticFilesPath, 'assets');
+    readdir(imagesDir, (err, files) => {
+        if (err) {
+            console.error('Error reading images directory:', err);
+            return res.status(500).json({ error: 'Failed to fetch gallery images' });
+        }
+        // Filter for image files (you can adjust the extensions as needed)
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+        const imageURLs = imageFiles.map(file => `/assets/${file}`); // Create URLs for the images
+        if (imageURLs.length === 0) {
+            console.error('No images found in the gallery.');
+            return res.status(404).json({ error: 'No images found' });
+        }
+        res.json(imageURLs); // Send the image URLs as JSON response
+    });
 });
 // graceful shutdown for server and database pool
 process.on('SIGTERM', async () => {

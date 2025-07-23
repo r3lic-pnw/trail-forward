@@ -1,32 +1,42 @@
+body {
+    /* background-image: url(../assets/come-into-the-light.jpg);
+    background-size: cover;
+    background-position: center; */
+    background-color: var(--primary-background-color);
+}
+
 #image-gallery {
-    width: 70%;
-    margin: 0 auto;
-    /* display: flex;
+    width: 100%;
+    /* margin: 0 auto; */
+    display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center; */
     position: relative;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* background-color: var(--secondary-background-color); */
+    margin: 20px 0;
 }
 
 .image-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    width: 80%;
+    max-height: 85vh;
     display: none;
-    text-align: center;
-    margin-top: 20px;
+    /* text-align: center; */
+    justify-content: center;
+
 
 }
 
 .gallery-image {
     max-width: 100%;
-    max-height: 80vh;
-    border-radius: 8px;
+    max-height: 85vh;
+    height: auto;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 8px 0;
 }
 
 .image-container.active {
-    display: block;
+    display: flex;
 }
 
 .img-nav {

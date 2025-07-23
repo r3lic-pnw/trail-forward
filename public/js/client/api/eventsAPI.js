@@ -62,16 +62,12 @@ export function displayEvents(events) {
             else {
                 pastEventsList.appendChild(eventItem);
             }
-            if (upcomingEventsList.children.length === 0) {
-                upcomingEventsList.innerHTML = '<li>No upcoming events found.</li>';
-            }
-            else if (pastEventsList.children.length === 0) {
-                pastEventsList.innerHTML = '<li>No past events found.</li>';
-            }
         });
     }
-    else {
+    if (upcomingEventsList.children.length === 0) {
         upcomingEventsList.innerHTML = '<li>No upcoming events found.</li>';
+    }
+    if (pastEventsList.children.length === 0) {
         pastEventsList.innerHTML = '<li>No past events found.</li>';
     }
 }

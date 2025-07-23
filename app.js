@@ -21,6 +21,12 @@ app.get("/edit-events", (req, res) => {
 app.get('/gallery', (req, res) => {
     res.sendFile("gallery.html", { root: staticHTMLPath });
 });
+app.get('/about', (req, res) => {
+    res.sendFile("about.html", { root: staticHTMLPath });
+});
+app.get('/contacts', (req, res) => {
+    res.sendFile("contacts.html", { root: staticHTMLPath });
+});
 // ********** API Endpoints **********
 // This endpoint will handle fetching events from the database.
 app.get('/api/events', (req, res) => {
@@ -75,7 +81,7 @@ const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}\n`);
 });
 // This endpoint will handle fetching images from the database.
-// Returnss a list of image URLs from the server's static assets directory.
+// Returns a list of image URLs from the server's static assets directory.
 app.get("/api/gallery", (req, res) => {
     console.log('Fetching gallery images\n');
     const imagesDir = path.join(staticFilesPath, 'assets');

@@ -21,6 +21,12 @@ app.get("/edit-events", (req, res) => {
 app.get('/gallery', (req, res) => {
     res.sendFile("gallery.html", { root: staticHTMLPath });
 });
+app.get('/about', (req, res) => {
+    res.sendFile("about.html", { root: staticHTMLPath });
+});
+app.get('/contacts', (req, res) => {
+    res.sendFile("contacts.html", { root: staticHTMLPath });
+});
 // ********** API Endpoints **********
 // This endpoint will handle fetching events from the database.
 app.get('/api/events', (req, res) => {

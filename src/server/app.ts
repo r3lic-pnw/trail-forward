@@ -30,6 +30,14 @@ app.get('/gallery', (req, res) => {
     res.sendFile("gallery.html", { root: staticHTMLPath });
 });
 
+app.get('/about', (req, res) => {
+    res.sendFile("about.html", { root: staticHTMLPath });
+});
+
+app.get('/contacts', (req, res) => {
+    res.sendFile("contacts.html", { root: staticHTMLPath });
+});
+
 
 // ********** API Endpoints **********
 

@@ -28,10 +28,6 @@ export async function fetchEvents() {
 export function displayEvents(events) {
     const upcomingEventsList = document.getElementById('upcoming-events-list');
     const pastEventsList = document.getElementById('past-events-list');
-    if (!upcomingEventsList || !pastEventsList) {
-        console.error('Upcoming or Past Events list elements not found.');
-        return;
-    }
     // Clear previous event lists
     upcomingEventsList.innerHTML = '';
     pastEventsList.innerHTML = '';
@@ -54,6 +50,12 @@ export function displayEvents(events) {
                 deleteButton.textContent = 'Delete';
                 deleteButton.addEventListener('click', () => deleteEvent(event.id));
                 eventItem.appendChild(deleteButton);
+            }
+            // Add a description if it exists
+            if (event.description) {
+                const description = document.createElement('p');
+                description.textContent = event.description;
+                eventItem.appendChild(description);
             }
             // Append the event item to the appropriate list based on the date
             if (new Date(event.date) >= new Date()) {

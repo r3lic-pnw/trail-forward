@@ -1,3 +1,7 @@
+body {
+    background-color: var(--secondary-background-color);
+}
+
 main {
     width: 80%;
     margin: 32px auto;
@@ -10,14 +14,14 @@ main {
 
 #intro {
     /* text-align: center; */
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--primary-background-color);
     color: white;
     width: auto;
     padding: 16px 8px;
 }
 
 #event-list {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--primary-background-color);
     color: white;
     margin-top: 32px;
     padding: 16px 8px;

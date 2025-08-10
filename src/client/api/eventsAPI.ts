@@ -31,13 +31,8 @@ export async function fetchEvents(): Promise<Array<Event> | null> {
  * @returns {void}
  */
 export function displayEvents(events: Event[] | null): void {
-    const upcomingEventsList: HTMLUListElement | null = document.getElementById('upcoming-events-list') as HTMLUListElement | null;
-    const pastEventsList: HTMLUListElement | null = document.getElementById('past-events-list') as HTMLUListElement | null;
-
-    if (!upcomingEventsList || !pastEventsList) {
-        console.error('Upcoming or Past Events list elements not found.');
-        return;
-    }
+    const upcomingEventsList: HTMLUListElement | null = document.getElementById('upcoming-events-list')! as HTMLUListElement;
+    const pastEventsList: HTMLUListElement | null = document.getElementById('past-events-list')! as HTMLUListElement;
 
     // Clear previous event lists
     upcomingEventsList.innerHTML = '';
@@ -58,7 +53,6 @@ export function displayEvents(events: Event[] | null): void {
                 eventItem.innerHTML += ` - ${new Date(event.date).toLocaleString()}`;
 
                 // Only show the delete button if the user is on the Edit Events page
-
                 if (window.location.pathname.includes("edit-events")) {
                     const deleteButton = document.createElement('button');
                     deleteButton.classList.add('delete-button');
@@ -66,6 +60,13 @@ export function displayEvents(events: Event[] | null): void {
                     deleteButton.addEventListener('click', () => deleteEvent(event.id));
 
                     eventItem.appendChild(deleteButton);
+                }
+
+                // Add a description if it exists
+                if (event.description) {
+                    const description = document.createElement('p');
+                    description.textContent = event.description;
+                    eventItem.appendChild(description);
                 }
 
                 // Append the event item to the appropriate list based on the date

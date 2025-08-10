@@ -6,7 +6,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "tsc --project tsconfig.client.json",
+    "build:server": "tsc --project tsconfig.server.json",
+    "dev": "tsc --watch",
+    "clean": "rm -rf public/js && rm -rf database && rm app.js"
   },
   "repository": {
     "type": "git",
@@ -25,8 +30,12 @@
   },
   "homepage": "https://github.com/r3lic-pnw/trail-forward#readme",
   "dependencies": {
-    "dotenv": "^17.0.0",
     "express": "^5.1.0",
     "mysql2": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3"
   }
 }

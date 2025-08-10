@@ -1,32 +1,35 @@
 import express from 'express';
 import path from 'path';
 import pool from './database/db.js';
-
+import { readdir } from 'fs';
 const staticFilesPath = path.join(process.cwd(), 'public');
 const staticHTMLPath = path.join(process.cwd(), 'public', 'html');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 app.use(express.static(staticFilesPath)); // Serve static HTML files from the public/html directory
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
-
 app.get('/', (req, res) => {
     res.sendFile("home.html", { root: staticHTMLPath });
 });
-
 app.get('/events', (req, res) => {
     res.sendFile("events.html", { root: staticHTMLPath });
 });
-
 app.get("/edit-events", (req, res) => {
     res.sendFile("editEvents.html", { root: staticHTMLPath });
 });
-
+app.get('/gallery', (req, res) => {
+    res.sendFile("gallery.html", { root: staticHTMLPath });
+});
+app.get('/about', (req, res) => {
+    res.sendFile("about.html", { root: staticHTMLPath });
+});
+app.get('/contacts', (req, res) => {
+    res.sendFile("contacts.html", { root: staticHTMLPath });
+});
+// ********** API Endpoints **********
 // This endpoint will handle fetching events from the database.
 app.get('/api/events', (req, res) => {
-
     // Create the events table if it doesn't exist
     pool.execute('CREATE TABLE IF NOT EXISTS events (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), date DATETIME, location VARCHAR(100))')
         .then(() => pool.execute('SELECT * FROM events'))
@@ -38,7 +41,6 @@ app.get('/api/events', (req, res) => {
             res.status(500).json({ error: 'Failed to fetch events' });
         });
 });
-
 // This endpoint will handle adding new events to the database.
 app.post('/api/events', (req, res) => {
     console.log('Adding new event\n');
@@ -54,12 +56,10 @@ app.post('/api/events', (req, res) => {
         })
         .then(() => {
             console.log('Event added successfully\n');
-
-            // Query back the just-inserted event to see what was actually stored
             return pool.execute('SELECT * FROM events WHERE name = ? ORDER BY id DESC LIMIT 1', [eventName]);
         })
         .then(result => {
-            console.log('Retrieved from DB:', result[0][0]);
+            console.log('Retrieved from DB:', result[0]);
             res.status(201).send(); // Send a 201 Created response
         })
         .catch(err => {
@@ -67,16 +67,14 @@ app.post('/api/events', (req, res) => {
             res.status(500).json({ error: 'Failed to add event' });
         });
 });
-
 // This endpoint will handle deleting an event by ID.
 app.delete('/api/events/:id', (req, res) => {
     const eventId = req.params.id;
-
     console.log(`Deleting event with ID: ${eventId}\n`);
-
     pool.execute('DELETE FROM events WHERE id = ?', [eventId])
         .then(result => {
-            if (result[0].affectedRows === 0) {
+            const header = result[0];
+            if (header.affectedRows === 0) {
                 return res.status(404).json({ error: 'Event not found' });
             }
             res.status(204).send();
@@ -85,15 +83,32 @@ app.delete('/api/events/:id', (req, res) => {
             res.status(500).json({ error: 'Failed to delete event' });
         });
 });
-
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}\n`);
 });
-
-
+// This endpoint will handle fetching images from the database.
+// Returns a list of image URLs from the server's static assets directory.
+app.get("/api/gallery", (req, res) => {
+    console.log('Fetching gallery images\n');
+    const imagesDir = path.join(staticFilesPath, 'assets');
+    readdir(imagesDir, (err, files) => {
+        if (err) {
+            console.error('Error reading images directory:', err);
+            return res.status(500).json({ error: 'Failed to fetch gallery images' });
+        }
+        // Filter for image files (you can adjust the extensions as needed)
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+        const imageURLs = imageFiles.map(file => `/assets/${file}`); // Create URLs for the images
+        if (imageURLs.length === 0) {
+            console.error('No images found in the gallery.');
+            return res.status(404).json({ error: 'No images found' });
+        }
+        res.json(imageURLs); // Send the image URLs as JSON response
+    });
+});
 // graceful shutdown for server and database pool
 process.on('SIGTERM', async () => {
-    console.log('Received SIGTERM, shutting down gracefully...');
+    console.error('Received SIGTERM, shutting down gracefully...');
     server.close(() => {
         pool.end().then(() => {
             console.log('Database pool closed');
@@ -101,9 +116,8 @@ process.on('SIGTERM', async () => {
         });
     });
 });
-
-process.on('SIGINT', async () => {  // Ctrl+C
-    console.log('Received SIGINT, shutting down gracefully...');
+process.on('SIGINT', async () => {
+    console.error('Received SIGINT, shutting down gracefully...');
     server.close(() => {
         pool.end().then(() => {
             console.log('Database pool closed');
@@ -111,7 +125,6 @@ process.on('SIGINT', async () => {  // Ctrl+C
         });
     });
 });
-
 // For unhandled errors
 process.on('uncaughtException', async (err) => {
     console.error('Uncaught exception:', err);
@@ -121,5 +134,4 @@ process.on('uncaughtException', async (err) => {
             process.exit(1);
         });
     });
-
 });

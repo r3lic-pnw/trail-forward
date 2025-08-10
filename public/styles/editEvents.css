@@ -9,7 +9,8 @@ li {
     gap: 16px;
     max-width: 600px;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    background-color: var(--primary-background-color);
     color: white;
     margin-top: 32px;
     padding: 16px 8px;

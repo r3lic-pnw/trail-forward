@@ -34,38 +34,32 @@ app.get('/api/events', (req, res) => {
     pool.execute('CREATE TABLE IF NOT EXISTS events (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), date DATETIME, location VARCHAR(100))')
         .then(() => pool.execute('SELECT * FROM events'))
         .then((result) => {
-            res.json(result[0]); // Send the fetched events as JSON response
-        })
+        res.json(result[0]); // Send the fetched events as JSON response
+    })
         .catch(err => {
-            console.error('Database connection error:', err);
-            res.status(500).json({ error: 'Failed to fetch events' });
-        });
+        console.error('Database connection error:', err);
+        res.status(500).json({ error: 'Failed to fetch events' });
+    });
 });
 // This endpoint will handle adding new events to the database.
 app.post('/api/events', (req, res) => {
     console.log('Adding new event\n');
-    const { eventName, eventDate, eventLocation, eventDescription } = req.body;
-
+    const { eventName, eventDate, eventLocation } = req.body;
     console.log('Received eventDate:', eventDate);
     console.log('Type of eventDate:', typeof eventDate);
-
-    pool.execute('INSERT INTO events (name, date, location, description) VALUES (?, ?, ?)', [eventName, eventDate, eventLocation, eventDescription])
-        .then(() => pool.execute("SELECT column_name, data_type, datetime_precision FROM information_schema.columns WHERE table_name = 'events' AND column_name = 'date'"))
-        .then(result => {
-            console.log('Date column metadata:', result[0][0]);
-        })
+    pool.execute('INSERT INTO events (name, date, location) VALUES (?, ?, ?)', [eventName, eventDate, eventLocation])
         .then(() => {
-            console.log('Event added successfully\n');
-            return pool.execute('SELECT * FROM events WHERE name = ? ORDER BY id DESC LIMIT 1', [eventName]);
-        })
+        console.log('Event added successfully\n');
+        return pool.execute('SELECT * FROM events WHERE name = ? ORDER BY id DESC LIMIT 1', [eventName]);
+    })
         .then(result => {
-            console.log('Retrieved from DB:', result[0]);
-            res.status(201).send(); // Send a 201 Created response
-        })
+        console.log('Retrieved from DB:', result[0]);
+        res.status(201).send(); // Send a 201 Created response
+    })
         .catch(err => {
-            console.error('Error adding event:', err);
-            res.status(500).json({ error: 'Failed to add event' });
-        });
+        console.error('Error adding event:', err);
+        res.status(500).json({ error: 'Failed to add event' });
+    });
 });
 // This endpoint will handle deleting an event by ID.
 app.delete('/api/events/:id', (req, res) => {
@@ -73,15 +67,15 @@ app.delete('/api/events/:id', (req, res) => {
     console.log(`Deleting event with ID: ${eventId}\n`);
     pool.execute('DELETE FROM events WHERE id = ?', [eventId])
         .then(result => {
-            const header = result[0];
-            if (header.affectedRows === 0) {
-                return res.status(404).json({ error: 'Event not found' });
-            }
-            res.status(204).send();
-        }).catch(err => {
-            console.error('Error deleting event:', err);
-            res.status(500).json({ error: 'Failed to delete event' });
-        });
+        const header = result[0];
+        if (header.affectedRows === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        res.status(204).send();
+    }).catch(err => {
+        console.error('Error deleting event:', err);
+        res.status(500).json({ error: 'Failed to delete event' });
+    });
 });
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}\n`);
@@ -108,7 +102,7 @@ app.get("/api/gallery", (req, res) => {
 });
 // graceful shutdown for server and database pool
 process.on('SIGTERM', async () => {
-    console.error('Received SIGTERM, shutting down gracefully...');
+    console.log('Received SIGTERM, shutting down gracefully...');
     server.close(() => {
         pool.end().then(() => {
             console.log('Database pool closed');
@@ -117,7 +111,7 @@ process.on('SIGTERM', async () => {
     });
 });
 process.on('SIGINT', async () => {
-    console.error('Received SIGINT, shutting down gracefully...');
+    console.log('Received SIGINT, shutting down gracefully...');
     server.close(() => {
         pool.end().then(() => {
             console.log('Database pool closed');

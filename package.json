@@ -10,8 +10,14 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "tsc --project tsconfig.client.json",
     "build:server": "tsc --project tsconfig.server.json",
-    "dev": "tsc --watch",
-    "clean": "rm -rf public/js && rm -rf database && rm app.js"
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\" \"nodemon app.js\"",
+    "dev:client": "npx tsc --watch --project tsconfig.client.json",
+    "dev:server": "npx tsc --watch --project tsconfig.server.json",
+    "clean": "rm -rf public/js database/db.js && rm app.js",
+    "clean:client": "rm -rf public/js",
+    "clean:server": "rm -rf database/db.js app.js types/",
+    "clean:app": "rm app.js",
+    "db:init": "node database/init.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +42,9 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.10",
+    "concurrently": "^9.2.1",
+    "dotenv": "^17.2.3",
+    "nodemon": "^3.1.11",
     "typescript": "^5.8.3"
   }
 }

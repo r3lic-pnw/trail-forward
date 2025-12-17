@@ -1,0 +1,22 @@
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Logs and system files
+npm-debug.log*
+.DS_Store
+
+# Build outputs (following your README conventions)
+/app.js
+database/db.js
+public/js/
+
+# Asset management
+public/assets/*
+!public/assets/logos/
+
+# Project-specific ignores
+GEMINI.md
+types/

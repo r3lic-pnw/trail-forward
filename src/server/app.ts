@@ -44,10 +44,7 @@ app.get("/contacts", (req, res) => {
 app.get("/api/events", (req, res) => {
   // Create the events table if it doesn't exist
   pool
-    .execute(
-      "CREATE TABLE IF NOT EXISTS events (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), date DATETIME, location VARCHAR(100), description VARCHAR(1024))"
-    )
-    .then(() => pool.execute("SELECT * FROM events"))
+    .execute("SELECT * FROM events")
     .then((result) => {
       res.json(result[0]); // Send the fetched events as JSON response
     })

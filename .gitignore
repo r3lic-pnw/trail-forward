@@ -8,10 +8,11 @@ node_modules/
 npm-debug.log*
 .DS_Store
 
-# Build outputs (following your README conventions)
+# Build outputs
 /app.js
 database/db.js
 public/js/
+/types
 
 # Asset management
 public/assets/*

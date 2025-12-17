@@ -5,18 +5,14 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "build": "npm run build:client && npm run build:server",
+    "build": "npm run clean && npm run build:client && npm run build:server",
     "build:client": "tsc --project tsconfig.client.json",
     "build:server": "tsc --project tsconfig.server.json",
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\" \"nodemon app.js\"",
-    "dev:client": "npx tsc --watch --project tsconfig.client.json",
-    "dev:server": "npx tsc --watch --project tsconfig.server.json",
-    "clean": "rm -rf public/js database/db.js && rm app.js",
-    "clean:client": "rm -rf public/js",
-    "clean:server": "rm -rf database/db.js app.js types/",
-    "clean:app": "rm app.js",
+    "dev": "concurrently -n \"CLIENT,SERVER,NODE\" -c \"magenta,blue,green\" \"npm run dev:client\" \"npm run dev:server\" \"nodemon app.js\"",
+    "dev:client": "tsc --watch --project tsconfig.client.json",
+    "dev:server": "tsc --watch --project tsconfig.server.json",
+    "clean": "rm -rf public/js database/db.js app.js",
     "db:init": "node database/init.js"
   },
   "repository": {
@@ -30,7 +26,7 @@
     "support"
   ],
   "author": "Jarrell Quincy | r3lic",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/r3lic-pnw/trail-forward/issues"
   },
